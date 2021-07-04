@@ -1,8 +1,8 @@
 import colors from 'colors'
 import jwt from 'jsonwebtoken'
-import { secretKey } from '../../config'
-import UsersModel from '../../models/auth/user.models'
-import Logger from '../../helpers/Logger'
+import { secretKey } from '../config'
+import UsersModel from '../models/auth.model'
+import Logger from '../helpers/Logger'
 
 const usersModel = UsersModel.getInstance()
 export default class UsersService {

@@ -8,6 +8,7 @@ export const db = {
     password: process.env.PASSWORD_RD || '',
     port: process.env.PORT_RD || ''
 }
+export const secretKey = process.env.SECRETKEY ?? 'Jq60$%$()gQRdrY'
 export const api = {
     prefix: '/api/v1'
 }

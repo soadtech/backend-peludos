@@ -1,10 +1,11 @@
-import { Router } from 'express'
+import { Router } from 'express';
+import validator from '../../../middleware/validator';
+import auth from './access/index';
+import schema from './access/schema'
 const router = Router();
 
 export default function () {
-    router.get("/login", () => {
-        console.log("Hola mundo")
-    });
+    router.post("/login", validator(schema.login), auth);
     // router.post("/singup", validator(schema.singup), authController.singup);
     return router;
 };

@@ -1,4 +1,4 @@
-import client from '../../loaders/redis'
+import client from '../loaders/redis'
 
 export default class UsersModel {
     static instance
