@@ -24,34 +24,37 @@ export const ResponseStatus = {
     NOT_FOUND: 404,
     INTERNAL_ERROR: 500
 }
-export const SuccessResponse = (res, msg = 'OK', success = true, data = undefined) => {
+
+export const SuccessResponse = (res, success = true, msg = 'OK', data) => {
     const body = {
-        success,
         message: msg,
+        success,
         StatusCode: StatusCode.SUCCESS
     }
     if (data !== undefined) Object.assign(body, data)
     return res.status(ResponseStatus.SUCCESS).json(body)
 }
+
 export const NotFoundError = (res) => {
-    return responseError(StatusCode.TECNICO, TypeErrors.NOTFOUND, ResponseStatus.NOT_FOUND, res)
+    return responseError(StatusCode.FAILURE, TypeErrors.NOTFOUND, ResponseStatus.NOT_FOUND, res)
 }
 
 export const AuthFailureError = (res, message = TypeErrors.UNAUTHORIZED) => {
-    return responseError(message, StatusCode.UNAUTHORIZED, res)
+    return responseError(StatusCode.FAILURE, message, ResponseStatus.UNAUTHORIZED, res)
 }
 
 export const BadRequestError = (res, message = TypeErrors.BAD_REQUEST) => {
-    return responseError(message, ResponseStatus.BAD_REQUEST, res)
+    return responseError(StatusCode.FAILURE, message, ResponseStatus.BAD_REQUEST, res)
 }
 
 export const InternalError = (res) => {
-    return responseError(TypeErrors.INTERNAL_ERROR, ResponseStatus.INTERNAL_ERROR, res)
+    return responseError(StatusCode.FAILURE, TypeErrors.INTERNAL_ERROR, 500, res)
 }
 
-export const responseError = (type, statusCode, res) => {
+export const responseError = (code, type, statusCode, res) => {
     return res.status(statusCode).json({
-        statusCode,
+        statusCode: code,
         message: type,
+        success: false
     })
 }

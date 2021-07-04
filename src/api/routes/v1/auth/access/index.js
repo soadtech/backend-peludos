@@ -7,10 +7,9 @@ const usersService = UsersService.getInstance()
 
 export default async (req, res) => {
     try {
-        const { email, password } = req.body
-        console.log('email, password', email, password)
+        const { email, password } = req.body;
         const user = await usersService.findByEmail(email)
-        if (user === null) return BadRequestError(res, 'User not register')
+        if (user === null) return SuccessResponse(res, false, 'User not register')
 
         // verify password
         const match = await usersService.comparePassword(password, user.pass)
@@ -19,7 +18,7 @@ export default async (req, res) => {
         // Create token
         const token = usersService.signToken(user)
 
-        return SuccessResponse(res, 'Signup Successful', { data: { user, token } })
+        return SuccessResponse(res, true, 'Signup Successful', { data: { user, token } })
     } catch (error) {
         logger.error(error)
         return InternalError(res)
@@ -27,5 +26,14 @@ export default async (req, res) => {
 }
 
 export const singup = async (req, res) => {
-    console.log('Llego aqui.');
+    try {
+        const { email, password, number } = req.body;
+        const user = await usersService.findByEmail(email)
+        if (user !== null) return SuccessResponse(res, false, 'User not register');
+
+
+
+    } catch (error) {
+        return InternalError(res)
+    }
 }
