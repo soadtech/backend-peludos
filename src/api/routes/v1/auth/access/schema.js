@@ -8,6 +8,7 @@ export default {
     singup: Joi.object().keys({
         email: Joi.string().required(),
         password: Joi.string().required(),
-        number: Joi.number().required()
+        number: Joi.number().required(),
+        name: Joi.string().required(),
     })
 }

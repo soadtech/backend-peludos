@@ -25,22 +25,23 @@ export default class UsersService {
                 name,
                 password,
                 number,
-                date: Date()
+                date: Date(),
+                image: 'https://i.ibb.co/g3qbhkY/036-person.png'
             }
-            const result = await usersModel.findByEmail(email, uuid, data)
-            return JSON.parse(result)
+            const result = await usersModel.createUser(email, uuid, data)
+            return result
         } catch (error) {
             Logger.error(colors.red('Error UsersService createUser '), error)
             throw new Error('ERROR TECNICO')
         }
     }
 
-    findByEmail = async (email) => {
+    findKeyByEmail = async (email) => {
         try {
-            const result = await usersModel.findByEmail(email)
-            return JSON.parse(result)
+            const result = await usersModel.findKeyByEmail(email)
+            return result
         } catch (error) {
-            Logger.error(colors.red('Error UsersService findByEmail '), error)
+            Logger.error(colors.red('Error UsersService findKeyByEmail '), error)
             throw new Error('ERROR TECNICO')
         }
     }

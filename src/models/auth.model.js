@@ -8,8 +8,8 @@ export default class UsersModel {
         }
         return UsersModel.instance
     }
-    findByEmail = async (email) => {
-        const reply = await client.get(`user_*_${email}`);
+    findKeyByEmail = async (email) => {
+        const reply = await client.keys(`user_*_${email}`);
         return reply
     }
     createUser = async (email, uuid, data) => {

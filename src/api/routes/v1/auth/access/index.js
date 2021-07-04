@@ -8,7 +8,7 @@ const usersService = UsersService.getInstance()
 export default async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await usersService.findByEmail(email)
+        const user = await usersService.findKeyByEmail(email)
         if (user === null) return SuccessResponse(res, false, 'User not register')
 
         // verify password
@@ -18,7 +18,7 @@ export default async (req, res) => {
         // Create token
         const token = usersService.signToken(user)
 
-        return SuccessResponse(res, true, 'Signup Successful', { data: { user, token } })
+        return SuccessResponse(res, true, 'Login Successful', { data: { user, token } })
     } catch (error) {
         logger.error(error)
         return InternalError(res)
@@ -27,11 +27,13 @@ export default async (req, res) => {
 
 export const singup = async (req, res) => {
     try {
-        const { email, password, number } = req.body;
-        const user = await usersService.findByEmail(email)
-        if (user !== null) return SuccessResponse(res, false, 'User not register');
+        const { email, password, number, name } = req.body;
+        const user = await usersService.findKeyByEmail(email)
+        console.log(user);
+        if (user !== null) return SuccessResponse(res, false, 'Ya existe un usuario con este correo electornico');
 
-
+        await usersService.createUser(email, name, password, number)
+        return SuccessResponse(res, true, 'Signup Successful')
 
     } catch (error) {
         return InternalError(res)
