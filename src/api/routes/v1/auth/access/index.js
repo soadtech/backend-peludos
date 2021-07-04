@@ -8,11 +8,15 @@ const usersService = UsersService.getInstance()
 export default async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await usersService.findKeyByEmail(email)
-        if (user === null) return SuccessResponse(res, false, 'User not register')
+        const userKey = await usersService.findKeyByEmail(email)
+        if (userKey.length <= 0) {
+            return SuccessResponse(res, false, 'User not register')
+        }
+
+        const user = await usersService.findByKey(userKey[0])
 
         // verify password
-        const match = await usersService.comparePassword(password, user.pass)
+        const match = await usersService.comparePassword(password, user.password)
         if (!match) return AuthFailureError(res)
 
         // Create token
@@ -29,7 +33,6 @@ export const singup = async (req, res) => {
     try {
         const { email, password, number, name } = req.body;
         const user = await usersService.findKeyByEmail(email)
-        console.log(user);
         if (user !== null) return SuccessResponse(res, false, 'Ya existe un usuario con este correo electornico');
 
         await usersService.createUser(email, name, password, number)

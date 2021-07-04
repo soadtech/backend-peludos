@@ -46,8 +46,17 @@ export default class UsersService {
         }
     }
 
+    findByKey = async (key) => {
+        try {
+            const result = await usersModel.findByKey(key)
+            return JSON.parse(result)
+        } catch (error) {
+            Logger.error(colors.red('Error UsersService findByKey '), error)
+            throw new Error('ERROR TECNICO')
+        }
+    }
+
     comparePassword = async (confirmPassword, password) => {
-        console.log(confirmPassword, password)
         try {
             return confirmPassword === password
         } catch (e) {
