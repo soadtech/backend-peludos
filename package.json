@@ -29,7 +29,10 @@
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "redis": "^3.1.2",
+    "redis-commands": "^1.7.0",
+    "then-redis": "^2.0.1"
   },
   "husky": {
     "hooks": {
